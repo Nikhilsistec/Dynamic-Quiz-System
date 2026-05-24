@@ -30,6 +30,7 @@
         </div>
     @else
         <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-200/60 dark:border-gray-700/60 overflow-hidden animate-fade-in-up">
+            <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-100 dark:divide-gray-700">
                 <thead class="bg-gray-50/80 dark:bg-gray-800/50">
                     <tr>
@@ -101,6 +102,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
         </div>
         <div class="mt-6">{{ $quizzes->links() }}</div>
     @endif

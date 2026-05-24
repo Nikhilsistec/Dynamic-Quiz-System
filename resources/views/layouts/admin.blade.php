@@ -26,10 +26,13 @@
 <body class="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
     <div class="flex min-h-screen">
+        {{-- Mobile overlay --}}
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden lg:hidden" onclick="closeSidebar()"></div>
+
         {{-- Sidebar --}}
-        <aside class="w-64 bg-slate-900 dark:bg-gray-950 text-white flex flex-col fixed inset-y-0 left-0 z-40 border-r border-slate-800 dark:border-gray-800">
+        <aside id="admin-sidebar" class="w-64 bg-slate-900 dark:bg-gray-950 text-white flex flex-col fixed inset-y-0 left-0 z-40 border-r border-slate-800 dark:border-gray-800 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
             {{-- Logo --}}
-            <div class="px-6 py-5 border-b border-slate-700/50 dark:border-gray-800">
+            <div class="px-6 py-5 border-b border-slate-700/50 dark:border-gray-800 flex items-center justify-between">
                 <a href="{{ route('admin.quizzes.index') }}" class="flex items-center gap-3">
                     <div class="w-9 h-9 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,6 +44,12 @@
                         <span class="text-[10px] font-medium text-slate-400 uppercase tracking-wider">Admin Panel</span>
                     </div>
                 </a>
+                {{-- Mobile close button --}}
+                <button onclick="closeSidebar()" class="lg:hidden p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
 
             {{-- Navigation --}}
@@ -111,13 +120,22 @@
         </aside>
 
         {{-- Main content area --}}
-        <div class="flex-1 ml-64">
+        <div class="flex-1 lg:ml-64">
             {{-- Top header bar --}}
             <header class="sticky top-0 z-30 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200/60 dark:border-gray-700/60 shadow-sm">
-                <div class="px-8 py-4 flex items-center justify-between">
-                    <div>
-                        <h2 class="text-lg font-bold text-gray-900 dark:text-white">@yield('page-title', 'Dashboard')</h2>
-                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">@yield('page-description', '')</p>
+                <div class="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        {{-- Mobile menu button --}}
+                        <button id="sidebar-toggle" type="button" onclick="openSidebar()"
+                                class="lg:hidden p-2 -ml-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                        </button>
+                        <div>
+                            <h2 class="text-lg font-bold text-gray-900 dark:text-white">@yield('page-title', 'Dashboard')</h2>
+                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">@yield('page-description', '')</p>
+                        </div>
                     </div>
                     <div class="flex items-center gap-3">
                         @yield('header-actions')
@@ -149,7 +167,7 @@
             @endif
 
             {{-- Page content --}}
-            <main class="px-8 py-8">
+            <main class="px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
                 @yield('content')
             </main>
         </div>
@@ -162,6 +180,16 @@
             const isDark = document.documentElement.classList.contains('dark');
             localStorage.setItem('admin-theme', isDark ? 'dark' : 'light');
         });
+
+        // Mobile sidebar toggle
+        function openSidebar() {
+            document.getElementById('admin-sidebar').classList.remove('-translate-x-full');
+            document.getElementById('sidebar-overlay').classList.remove('hidden');
+        }
+        function closeSidebar() {
+            document.getElementById('admin-sidebar').classList.add('-translate-x-full');
+            document.getElementById('sidebar-overlay').classList.add('hidden');
+        }
 
         // Auto-dismiss server flash toasts
         document.querySelectorAll('[id^="server-toast-"]').forEach(toast => {

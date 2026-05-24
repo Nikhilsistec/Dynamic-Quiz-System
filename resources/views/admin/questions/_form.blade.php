@@ -22,7 +22,7 @@
         <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm space-y-4">
             <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wide">Question Setup</h2>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                         Question Type <span class="text-red-500">*</span>

@@ -6,6 +6,7 @@
 @section('page-description', $quiz->questions->count() . ' questions · ' . $quiz->questions->sum('marks') . ' total marks' . ($quiz->time_limit_minutes ? ' · ' . $quiz->time_limit_minutes . ' min' : ''))
 
 @section('header-actions')
+    <div class="flex flex-wrap items-center gap-2">
     <a href="{{ route('admin.quizzes.edit', $quiz) }}"
        class="text-sm text-gray-600 hover:text-gray-900 bg-white border border-gray-200 px-4 py-2 rounded-xl shadow-sm hover:shadow transition-all font-medium">
         Edit Quiz
@@ -15,6 +16,7 @@
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         Add Question
     </a>
+    </div>
 @endsection
 
 @section('content')
@@ -103,7 +105,7 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex items-center gap-1 shrink-0 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                             <a href="{{ route('admin.quizzes.questions.edit', [$quiz, $question]) }}"
                                class="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-colors" title="Edit">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
